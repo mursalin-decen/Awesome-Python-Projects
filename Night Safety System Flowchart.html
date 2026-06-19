@@ -1,0 +1,565 @@
+slides:Night Safety System Flowchart:night_safety_diagram.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night Safety System (SD-1) - Professional Flowchart</title>
+    <!-- Google Fonts & FontAwesome for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* 1. SETUP & THEME VARIABLES */
+        :root {
+            --bg-color: #030712;
+            --grid-color: rgba(30, 41, 59, 0.5);
+            --text-main: #f3f4f6;
+            --text-muted: #94a3b8;
+            
+            /* Node Colors with Glow Values */
+            --color-start-end: #10b981;
+            --color-start-end-glow: rgba(16, 185, 129, 0.3);
+            
+            --color-process: #3b82f6;
+            --color-process-glow: rgba(59, 130, 246, 0.35);
+            
+            --color-dashboard: #06b6d4;
+            --color-dashboard-glow: rgba(6, 182, 212, 0.45);
+            
+            --color-database: #eab308;
+            --color-database-glow: rgba(234, 179, 8, 0.35);
+            
+            --color-inactive: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            padding-bottom: 40px;
+        }
+
+        /* 2. HEADER & PRESENTATION CONTROLS */
+        header {
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #1e293b;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title span {
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(6, 182, 212, 0.15);
+            color: #06b6d4;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: #111827;
+            border: 1px solid #1e293b;
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover, .btn.active {
+            background: #1e293b;
+            border-color: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn.active-sos { border-color: var(--color-start-end); color: var(--color-start-end); }
+        .btn.active-contacts { border-color: var(--color-process); color: var(--color-process); }
+        .btn.active-history { border-color: var(--color-database); color: var(--color-database); }
+
+        /* 3. FLOWCHART CANVAS */
+        .canvas {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Arrows/Connectors Styling */
+        .arrow-v {
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(to bottom, var(--color-process), rgba(59, 130, 246, 0.2));
+            position: relative;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .arrow-v::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid var(--color-process);
+            transition: all 0.3s ease;
+        }
+
+        /* 4. NODE STYLES */
+        .node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #090d16;
+            border: 2px solid var(--color-process);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05);
+        }
+
+        /* Oval Nodes (Start/End) */
+        .node.oval {
+            border-radius: 50px;
+            border-color: var(--color-start-end);
+            box-shadow: 0 0 15px var(--color-start-end-glow);
+            min-width: 140px;
+        }
+
+        /* Process Nodes (Standard Rectangles) */
+        .node.rect {
+            border-radius: 8px;
+            min-width: 200px;
+        }
+
+        /* Special Dashboard Node */
+        .node.dashboard {
+            border-color: var(--color-dashboard);
+            box-shadow: 0 0 20px var(--color-dashboard-glow);
+            font-size: 18px;
+            letter-spacing: 0.05em;
+            padding: 16px 36px;
+            min-width: 250px;
+        }
+
+        /* Cylinder Nodes (Database) */
+        .node.cylinder {
+            border-radius: 0;
+            border-left: 2px solid var(--color-database);
+            border-right: 2px solid var(--color-database);
+            border-top: none;
+            border-bottom: none;
+            background: rgba(234, 179, 8, 0.03);
+            min-width: 180px;
+            height: 55px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .node.cylinder::before, .node.cylinder::after {
+            content: '';
+            position: absolute;
+            left: -2px;
+            right: -2px;
+            height: 12px;
+            border: 2px solid var(--color-database);
+            border-radius: 50%;
+            background: #090d16;
+            transition: all 0.4s ease;
+        }
+
+        .node.cylinder::before {
+            top: -6px;
+        }
+
+        .node.cylinder::after {
+            bottom: -6px;
+        }
+
+        /* Icons inside nodes */
+        .node i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        /* 5. TREE & BRANCHES STRUCTURING */
+        .branch-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 30px;
+            position: relative;
+            margin-top: 40px;
+        }
+
+        /* Horizontal Split line connecting dashboard to columns */
+        .branch-bridge {
+            position: absolute;
+            top: -40px;
+            left: 16%;
+            right: 16%;
+            height: 2px;
+            background: var(--color-dashboard);
+            z-index: 0;
+        }
+
+        .branch-bridge::before, .branch-bridge::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 40px;
+            background: var(--color-dashboard);
+            top: 0;
+        }
+
+        .branch-bridge::before { left: 0; }
+        .branch-bridge::after { right: 0; }
+
+        /* Direct link for central branch */
+        .branch-bridge-center {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            width: 2px;
+            height: 40px;
+            background: var(--color-dashboard);
+            transform: translateX(-50%);
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px dashed rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 24px 15px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        /* Column specific accents */
+        .column-title {
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 25px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+
+        /* 6. BOTTOM MERGE AREA */
+        .merge-container {
+            width: 100%;
+            height: 60px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .merge-bridge {
+            position: absolute;
+            top: 0;
+            left: 16%;
+            right: 16%;
+            height: 2px;
+            background: var(--text-muted);
+            opacity: 0.3;
+        }
+
+        .merge-bridge::before, .merge-bridge::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 30px;
+            background: var(--text-muted);
+            top: -30px;
+        }
+
+        .merge-bridge::before { left: 0; }
+        .merge-bridge::after { right: 0; }
+
+        .merge-bridge-center {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            width: 2px;
+            height: 30px;
+            background: var(--text-muted);
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+
+        /* 7. TRACK HIGHLIGHTER LOGIC (INTERACTIVE PRESENTATION) */
+        /* Default Dim state when specific track is active */
+        body.focus-sos .column:not(.col-sos),
+        body.focus-contacts .column:not(.col-contacts),
+        body.focus-history .column:not(.col-history) {
+            opacity: 0.15;
+            filter: grayscale(80%) blur(1px);
+        }
+
+        body.focus-sos .col-sos,
+        body.focus-contacts .col-contacts,
+        body.focus-history .col-history {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        /* Dynamic Connector Glow changes */
+        body.focus-sos .arrow-v, body.focus-sos .node { --color-process: var(--color-start-end); }
+        body.focus-contacts .arrow-v, body.focus-contacts .node { --color-process: #3b82f6; }
+        body.focus-history .arrow-v, body.focus-history .node { --color-process: var(--color-database); }
+
+        /* Pro Tip Note footer */
+        footer {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .pro-tip {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            border-left: 4px solid #06b6d4;
+            padding: 16px 24px;
+            border-radius: 8px;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #e2e8f0;
+            font-size: 15px;
+        }
+
+        .pro-tip i {
+            color: #06b6d4;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Professional Presentation Header Controls -->
+    <header>
+        <div class="header-title">
+            <h1><i class="fa-solid fa-compass"></i> NIGHT SAFETY SYSTEM (SD-1) <span>V1.0 PRESENTATION</span></h1>
+        </div>
+        <div class="controls">
+            <button class="btn active" id="btn-all" onclick="highlightTrack('all')">
+                <i class="fa-solid fa-diagram-project"></i> Complete Flow
+            </button>
+            <button class="btn" id="btn-sos" onclick="highlightTrack('sos')">
+                <i class="fa-solid fa-triangle-exclamation" style="color: var(--color-start-end)"></i> SOS Loop
+            </button>
+            <button class="btn" id="btn-contacts" onclick="highlightTrack('contacts')">
+                <i class="fa-solid fa-user-shield" style="color: #3b82f6"></i> Manage Contacts
+            </button>
+            <button class="btn" id="btn-history" onclick="highlightTrack('history')">
+                <i class="fa-solid fa-clock-rotate-left" style="color: var(--color-database)"></i> History Audit
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Flowchart Canvas -->
+    <div class="canvas" id="presentationCanvas">
+        
+        <!-- Root Top flow (Centred) -->
+        <div class="node oval" style="border-color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);">
+            <i class="fa-solid fa-play" style="color: #10b981;"></i> START
+        </div>
+        <div class="arrow-v"></div>
+        
+        <div class="node rect">
+            <i class="fa-solid fa-mobile-screen"></i> Open Application
+        </div>
+        <div class="arrow-v"></div>
+        
+        <div class="node rect">
+            <i class="fa-solid fa-user-lock"></i> Login / Register Page
+        </div>
+        <div class="arrow-v"></div>
+        
+        <!-- Dashboard Core Node -->
+        <div class="node rect dashboard">
+            <i class="fa-solid fa-chart-line" style="color: var(--color-dashboard)"></i> DASHBOARD
+        </div>
+
+        <!-- Tree Branching Area -->
+        <div class="branch-container">
+            <div class="branch-bridge"></div>
+            <div class="branch-bridge-center"></div>
+            
+            <!-- COLUMN 1: SOS EMERGENCY FLOW -->
+            <div class="column col-sos">
+                <div class="column-title" style="color: var(--color-start-end)">SOS Flow</div>
+                
+                <div class="node rect" style="border-color: var(--color-start-end); box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);">
+                    <i class="fa-solid fa-circle-exclamation" style="color: var(--color-start-end)"></i> SOS BUTTON
+                </div>
+                <div class="arrow-v" style="background: var(--color-start-end)"></div>
+                
+                <div class="node rect">
+                    <i class="fa-solid fa-id-card"></i> Get User Info
+                </div>
+                <div class="arrow-v" style="background: var(--color-start-end)"></div>
+                
+                <div class="node rect">
+                    <i class="fa-solid fa-users-viewfinder"></i> Fetch Trusted Contacts
+                </div>
+                <div class="arrow-v" style="background: var(--color-start-end)"></div>
+                
+                <div class="node rect">
+                    <i class="fa-solid fa-paper-plane"></i> Send Emergency Alert
+                </div>
+                <div class="arrow-v" style="background: var(--color-start-end)"></div>
+                
+                <div class="node cylinder">
+                    <i class="fa-solid fa-database" style="color: var(--color-database)"></i> Save Alert in DB
+                </div>
+                <div class="arrow-v" style="background: var(--color-start-end)"></div>
+                
+                <div class="node rect">
+                    <i class="fa-solid fa-circle-check" style="color: #10b981;"></i> Show "Alert Sent" Msg
+                </div>
+            </div>
+
+            <!-- COLUMN 2: TRUSTED CONTACTS FLOW -->
+            <div class="column col-contacts">
+                <div class="column-title" style="color: #3b82f6">Trusted Network</div>
+                
+                <div class="node rect">
+                    <i class="fa-solid fa-user-shield"></i> TRUSTED CONTACTS
+                </div>
+                <div class="arrow-v"></div>
+                
+                <div class="node rect">
+                    <i class="fa-solid fa-user-plus"></i> Add / View Contacts
+                </div>
+                <div class="arrow-v"></div>
+                
+                <div class="node cylinder">
+                    <i class="fa-solid fa-database" style="color: var(--color-database)"></i> Contact Save
+                </div>
+            </div>
+
+            <!-- COLUMN 3: ALERT HISTORY FLOW -->
+            <div class="column col-history">
+                <div class="column-title" style="color: var(--color-database)">Audit Logs</div>
+                
+                <div class="node rect">
+                    <i class="fa-solid fa-clock-rotate-left"></i> View History
+                </div>
+                <div class="arrow-v" style="background: var(--color-database)"></div>
+                
+                <div class="node cylinder">
+                    <i class="fa-solid fa-server" style="color: var(--color-database)"></i> Fetch from Database
+                </div>
+                <div class="arrow-v" style="background: var(--color-database)"></div>
+                
+                <div class="node rect">
+                    <i class="fa-solid fa-list-check"></i> Show Alert List
+                </div>
+            </div>
+        </div>
+
+        <!-- Merging Flows to End -->
+        <div class="merge-container">
+            <div class="merge-bridge"></div>
+            <div class="merge-bridge-center"></div>
+        </div>
+
+        <div class="node oval" style="border-color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);">
+            <i class="fa-solid fa-power-off" style="color: #ef4444;"></i> END
+        </div>
+
+        <!-- Pro Tip Slide Footer -->
+        <footer>
+            <div class="pro-tip">
+                <i class="fa-solid fa-circle-info"></i>
+                <span><strong>Architecture Note:</strong> "This system follows a structured emergency response flow to ensure fast and reliable safety assistance."</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Presentation Interactive Script -->
+    <script>
+        function highlightTrack(track) {
+            // Remove active classes
+            document.querySelectorAll('.controls .btn').forEach(b => b.classList.remove('active'));
+            document.body.classList.remove('focus-sos', 'focus-contacts', 'focus-history');
+            
+            // Set new active classes
+            if (track === 'all') {
+                document.getElementById('btn-all').classList.add('active');
+            } else {
+                document.getElementById('btn-' + track).classList.add('active');
+                document.body.classList.add('focus-' + track);
+            }
+        }
+    </script>
+</body>
+</html>
+

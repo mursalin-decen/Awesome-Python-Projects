@@ -13,5 +13,5 @@ Geocoder(
     zoom=12                  # The zoom level to snap to once a city is found
 ).add_to(m)
 
-
+# 3. Save the map as a standalone interactive HTML file
 m.save("worldwide_search_map.html")
