@@ -1,6 +1,6 @@
-slides:Night Safety System Flowchart:night_safety_diagram.html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,11 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
     <!-- Google Fonts & FontAwesome for Premium Look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <style>
         /* 1. SETUP & THEME VARIABLES */
         :root {
@@ -18,20 +20,20 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             --grid-color: rgba(30, 41, 59, 0.5);
             --text-main: #f3f4f6;
             --text-muted: #94a3b8;
-            
+
             /* Node Colors with Glow Values */
             --color-start-end: #10b981;
             --color-start-end-glow: rgba(16, 185, 129, 0.3);
-            
+
             --color-process: #3b82f6;
             --color-process-glow: rgba(59, 130, 246, 0.35);
-            
+
             --color-dashboard: #06b6d4;
             --color-dashboard-glow: rgba(6, 182, 212, 0.45);
-            
+
             --color-database: #eab308;
             --color-database-glow: rgba(234, 179, 8, 0.35);
-            
+
             --color-inactive: #1e293b;
         }
 
@@ -44,7 +46,7 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
 
         body {
             background-color: var(--bg-color);
-            background-image: 
+            background-image:
                 linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
             background-size: 24px 24px;
@@ -113,15 +115,27 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             transition: all 0.2s ease;
         }
 
-        .btn:hover, .btn.active {
+        .btn:hover,
+        .btn.active {
             background: #1e293b;
             border-color: #3b82f6;
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
         }
 
-        .btn.active-sos { border-color: var(--color-start-end); color: var(--color-start-end); }
-        .btn.active-contacts { border-color: var(--color-process); color: var(--color-process); }
-        .btn.active-history { border-color: var(--color-database); color: var(--color-database); }
+        .btn.active-sos {
+            border-color: var(--color-start-end);
+            color: var(--color-start-end);
+        }
+
+        .btn.active-contacts {
+            border-color: var(--color-process);
+            color: var(--color-process);
+        }
+
+        .btn.active-history {
+            border-color: var(--color-database);
+            color: var(--color-database);
+        }
 
         /* 3. FLOWCHART CANVAS */
         .canvas {
@@ -170,7 +184,7 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             background: #090d16;
             border: 2px solid var(--color-process);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         }
 
         /* Oval Nodes (Start/End) */
@@ -213,7 +227,8 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             justify-content: center;
         }
 
-        .node.cylinder::before, .node.cylinder::after {
+        .node.cylinder::before,
+        .node.cylinder::after {
             content: '';
             position: absolute;
             left: -2px;
@@ -260,7 +275,8 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             z-index: 0;
         }
 
-        .branch-bridge::before, .branch-bridge::after {
+        .branch-bridge::before,
+        .branch-bridge::after {
             content: '';
             position: absolute;
             width: 2px;
@@ -269,8 +285,13 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             top: 0;
         }
 
-        .branch-bridge::before { left: 0; }
-        .branch-bridge::after { right: 0; }
+        .branch-bridge::before {
+            left: 0;
+        }
+
+        .branch-bridge::after {
+            right: 0;
+        }
 
         /* Direct link for central branch */
         .branch-bridge-center {
@@ -327,7 +348,8 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             opacity: 0.3;
         }
 
-        .merge-bridge::before, .merge-bridge::after {
+        .merge-bridge::before,
+        .merge-bridge::after {
             content: '';
             position: absolute;
             width: 2px;
@@ -336,8 +358,13 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             top: -30px;
         }
 
-        .merge-bridge::before { left: 0; }
-        .merge-bridge::after { right: 0; }
+        .merge-bridge::before {
+            left: 0;
+        }
+
+        .merge-bridge::after {
+            right: 0;
+        }
 
         .merge-bridge-center {
             position: absolute;
@@ -364,13 +391,24 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
         body.focus-history .col-history {
             background: rgba(15, 23, 42, 0.6);
             border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
 
         /* Dynamic Connector Glow changes */
-        body.focus-sos .arrow-v, body.focus-sos .node { --color-process: var(--color-start-end); }
-        body.focus-contacts .arrow-v, body.focus-contacts .node { --color-process: #3b82f6; }
-        body.focus-history .arrow-v, body.focus-history .node { --color-process: var(--color-database); }
+        body.focus-sos .arrow-v,
+        body.focus-sos .node {
+            --color-process: var(--color-start-end);
+        }
+
+        body.focus-contacts .arrow-v,
+        body.focus-contacts .node {
+            --color-process: #3b82f6;
+        }
+
+        body.focus-history .arrow-v,
+        body.focus-history .node {
+            --color-process: var(--color-database);
+        }
 
         /* Pro Tip Note footer */
         footer {
@@ -400,6 +438,7 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
         }
     </style>
 </head>
+
 <body>
 
     <!-- Professional Presentation Header Controls -->
@@ -425,23 +464,23 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
 
     <!-- Main Flowchart Canvas -->
     <div class="canvas" id="presentationCanvas">
-        
+
         <!-- Root Top flow (Centred) -->
         <div class="node oval" style="border-color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);">
             <i class="fa-solid fa-play" style="color: #10b981;"></i> START
         </div>
         <div class="arrow-v"></div>
-        
+
         <div class="node rect">
             <i class="fa-solid fa-mobile-screen"></i> Open Application
         </div>
         <div class="arrow-v"></div>
-        
+
         <div class="node rect">
             <i class="fa-solid fa-user-lock"></i> Login / Register Page
         </div>
         <div class="arrow-v"></div>
-        
+
         <!-- Dashboard Core Node -->
         <div class="node rect dashboard">
             <i class="fa-solid fa-chart-line" style="color: var(--color-dashboard)"></i> DASHBOARD
@@ -451,36 +490,37 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
         <div class="branch-container">
             <div class="branch-bridge"></div>
             <div class="branch-bridge-center"></div>
-            
+
             <!-- COLUMN 1: SOS EMERGENCY FLOW -->
             <div class="column col-sos">
                 <div class="column-title" style="color: var(--color-start-end)">SOS Flow</div>
-                
-                <div class="node rect" style="border-color: var(--color-start-end); box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);">
+
+                <div class="node rect"
+                    style="border-color: var(--color-start-end); box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);">
                     <i class="fa-solid fa-circle-exclamation" style="color: var(--color-start-end)"></i> SOS BUTTON
                 </div>
                 <div class="arrow-v" style="background: var(--color-start-end)"></div>
-                
+
                 <div class="node rect">
                     <i class="fa-solid fa-id-card"></i> Get User Info
                 </div>
                 <div class="arrow-v" style="background: var(--color-start-end)"></div>
-                
+
                 <div class="node rect">
                     <i class="fa-solid fa-users-viewfinder"></i> Fetch Trusted Contacts
                 </div>
                 <div class="arrow-v" style="background: var(--color-start-end)"></div>
-                
+
                 <div class="node rect">
                     <i class="fa-solid fa-paper-plane"></i> Send Emergency Alert
                 </div>
                 <div class="arrow-v" style="background: var(--color-start-end)"></div>
-                
+
                 <div class="node cylinder">
                     <i class="fa-solid fa-database" style="color: var(--color-database)"></i> Save Alert in DB
                 </div>
                 <div class="arrow-v" style="background: var(--color-start-end)"></div>
-                
+
                 <div class="node rect">
                     <i class="fa-solid fa-circle-check" style="color: #10b981;"></i> Show "Alert Sent" Msg
                 </div>
@@ -489,17 +529,17 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             <!-- COLUMN 2: TRUSTED CONTACTS FLOW -->
             <div class="column col-contacts">
                 <div class="column-title" style="color: #3b82f6">Trusted Network</div>
-                
+
                 <div class="node rect">
                     <i class="fa-solid fa-user-shield"></i> TRUSTED CONTACTS
                 </div>
                 <div class="arrow-v"></div>
-                
+
                 <div class="node rect">
                     <i class="fa-solid fa-user-plus"></i> Add / View Contacts
                 </div>
                 <div class="arrow-v"></div>
-                
+
                 <div class="node cylinder">
                     <i class="fa-solid fa-database" style="color: var(--color-database)"></i> Contact Save
                 </div>
@@ -508,17 +548,17 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             <!-- COLUMN 3: ALERT HISTORY FLOW -->
             <div class="column col-history">
                 <div class="column-title" style="color: var(--color-database)">Audit Logs</div>
-                
+
                 <div class="node rect">
                     <i class="fa-solid fa-clock-rotate-left"></i> View History
                 </div>
                 <div class="arrow-v" style="background: var(--color-database)"></div>
-                
+
                 <div class="node cylinder">
                     <i class="fa-solid fa-server" style="color: var(--color-database)"></i> Fetch from Database
                 </div>
                 <div class="arrow-v" style="background: var(--color-database)"></div>
-                
+
                 <div class="node rect">
                     <i class="fa-solid fa-list-check"></i> Show Alert List
                 </div>
@@ -539,7 +579,8 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
         <footer>
             <div class="pro-tip">
                 <i class="fa-solid fa-circle-info"></i>
-                <span><strong>Architecture Note:</strong> "This system follows a structured emergency response flow to ensure fast and reliable safety assistance."</span>
+                <span><strong>Architecture Note:</strong> "This system follows a structured emergency response flow to
+                    ensure fast and reliable safety assistance."</span>
             </div>
         </footer>
     </div>
@@ -550,7 +591,7 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
             // Remove active classes
             document.querySelectorAll('.controls .btn').forEach(b => b.classList.remove('active'));
             document.body.classList.remove('focus-sos', 'focus-contacts', 'focus-history');
-            
+
             // Set new active classes
             if (track === 'all') {
                 document.getElementById('btn-all').classList.add('active');
@@ -561,5 +602,5 @@ slides:Night Safety System Flowchart:night_safety_diagram.html
         }
     </script>
 </body>
-</html>
 
+</html>
