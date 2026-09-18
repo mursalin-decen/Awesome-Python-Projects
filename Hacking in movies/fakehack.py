@@ -4,7 +4,7 @@ import time
 screen = turtle.Screen()
 screen.setup(width=1000, height=700)
 screen.bgcolor("black")
-screen.title("Hacking")
+screen.title("Hacking")+i 
 t = turtle.Turtle()
 t.hideturtle()
 t.color("lime")
